@@ -1,5 +1,29 @@
 @media(min-width: 600px) {
-    .top-nav{
+    .top-nav {
         box-shadow: 0 0 50px grey !important;
     }
+
+    #top-actions-section {
+        display: flex !important;
+        align-items: center !important;
+    }
+}
+
+@media(max-width: 600px) {
+    .container {
+        width: 100% !important;
+    }
+}
+
+.user-list-item.active .users-list-arrow-icon {
+    transform: rotate(180deg);
+}
+
+.user-list-item.active,
+.user-list-item.active .collapsible-header {
+    background-color: rgba(190, 185, 185, 0.5);
+}
+
+table.highlight>tbody>tr:hover {
+    background-color: #003366;
 }
