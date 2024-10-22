@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>My Project</title>
+    <title>Users Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Add materialize -->
@@ -14,11 +14,10 @@
 </head>
 
 <body>
-
     <!-- Start nav -->
     <nav class="white z-depth-0 top-nav">
         <div class="nav-wrapper">
-            <a href="#!" class="blue-text hide-on-med-and-up">Home</a>
+            <a href="#!" class="blue-text hide-on-med-and-up">User Management</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger">
                 <i class="material-icons blue-text">menu</i></a>
             <ul class="hide-on-med-and-down">
@@ -51,16 +50,33 @@
         <li><a href="/users.html" class="waves-effect" href="#!">Users</a></li>
     </ul>
     <!-- end side nav -->
-    <!-- start Home -->
-    <section class="flex-c-m flex-col sizefull p-r-20 p-l-20 p-t-40">
-        <img src="assets/img/ryan-magsino-qvRhwItKUec-unsplash.jpg" class="w-full max-w-400"
-            alt="Sponge-Bob in suit">
-        <a href="#"
-            class="waves-effect waves-light btn blue darken-3 w-full max-w-250 m-t-35 m-b-10 rounded_pill">Sponge-Bob</a>
-        <a href="/users.html"
-            class="waves-effect waves-light btn blue darken-3 w-full max-w-250 m-t-10 m-b-10 rounded_pill">Users</a>
+    <!-- start content -->
+
+    <section id="top-actions-section">
+        <!-- Start Add Button -->
+        <div class="p-l-10 p-r-10 p-t-10">
+            <button class="waves-effect waves-light btn blue darken-2 p-l-30 p-r-30 w-full rounded_pill flex-c">
+                <i class="material-icons m-r-5">Add</i>
+                Add User
+            </button>
+        </div>
+        <!-- End Add Button -->
+        <!-- Start Add Button -->
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="search" type="text" class="validate">
+                <label for="search">
+                    <i class="material-icons pos-relative top-6">search</i>
+                    Search
+                </label>
+            </div>
+        </div>
+        <!-- End Add Button -->
     </section>
-    <!-- end Home -->
+
+    <!-- end content -->
+
+
     <!-- script links -->
     <script src="/assets/materialize/js/materialize.min.js"></script>
     <script src="/assets/js/app.js"></script>
