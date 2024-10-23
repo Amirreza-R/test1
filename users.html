@@ -98,7 +98,7 @@
     <section class="user-list-selection" x-init='getUsers()'>
         <!-- start users for phone -->
         <ul class="collapsible hide-on-med-and-up">
-            <template x-for="user in users">
+            <template x-for="user in pageUsers">
                 <li class="user-list-item">
                     <div class="collapsible-header">
                         <i
@@ -142,7 +142,7 @@
                     </tr>
                 </thead>
                 <tbody class="desktop-table-body">
-                    <template x-for="user in users">
+                    <template x-for="user in pageUsers">
                         <tr>
                             <td x-text="user.id"></td>
                             <td x-text="user.name"></td>
@@ -160,28 +160,28 @@
         </div>
         <!-- end users for desktop -->
         <!-- start footer -->
-        <div
-            class="footer-container container p-l-9 p-r-9 p-t-19 p-b-10 flex-sb-m pos-fixed left-0 right-0 bottom-0 z-depth-4 rounded_top_30">
+        <div class="footer-container container p-l-9 p-r-9 p-t-19 p-b-10 flex-sb-m pos-fixed left-0 right-0 bottom-0 z-depth-4 rounded_top_30">
             <div class="footer-item-counts p-l-10 flex-l-base">
                 showing
-                <span class="m-l-5 m-r-5 max-w-50">
-                    <input type="number" class="blue-text text-darken-2 no-border center-align m-b-0" value="10">
+                <span class="m-l-5 m-r-5 max-w-50" x-init="$watch('itemsCount', (value)=>handleChangeItemsCount(value))">
+                    <input type="number" class="blue-text text-darken-2 no-border center-align m-b-0" x-model="itemsCount" x-on:change="pagination()">
                 </span>
                 of
-                <span class="blue-text text-darken-2 m-l-5 m-r-5">100</span>
+                <span class="blue-text text-darken-2 m-l-5 m-r-5" x-text="users.length">100</span>
             </div>
+            <strong x-text="currentPage" class="blue-text text-darken-2 page-number"></strong>
             <div class="footer-buttons">
                 <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_left</i>
+                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill" x-on:click="previousPage()">keyboard_arrow_left</i>
                 <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_right</i>
+                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill" x-on:click="nextPage()">keyboard_arrow_right</i>
             </div>
         </div>
         <!-- end footer -->
     </section>
     <!-- end users info -->
     <!-- start add user -->
-    <div class="add-user-modal-back dis-none" x-bind:class="{'dis-none': !showAddModal}" x-on:click="showAddModal=false"></div>
+    <div class="add-user-modal-back" x-show="showAddModal" x-transition x-on:click="showAddModal = false"></div>
     <div class="add-user-modal container rounded_top_30 trans-0-3" x-bind:class="{'show': showAddModal}">
         <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center-on-small-only">
             <h5>
@@ -209,6 +209,8 @@
         </div>
     </div>
     <!-- end add user -->
+
+
 
     <!-- script links -->
     <script src="assets/js/axios.js"></script>
