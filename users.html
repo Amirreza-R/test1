@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/css/util.css">
 </head>
 
-<body>
+<body x-data="usersData">
     <!-- Start nav -->
     <nav class="white z-depth-0 top-nav">
         <div class="nav-wrapper">
@@ -76,53 +76,28 @@
     </section>
     <!-- end top section -->
     <!-- start users info -->
-    <section class="user-list-selection">
+    <section class="user-list-selection" x-init='getUsers()'>
         <!-- start users for phone -->
         <ul class="collapsible hide-on-med-and-up">
-            <li class="user-list-item">
+            <template x-for="user in users">
+                <li class="user-list-item">
                 <div class="collapsible-header">
                     <i
                         class="material-icons users-list-arrow-icon trans-0-2 blue-text text-darken-2">arrow_drop_down_circle</i>
-                    Amirreza Razavi
+                        <span x-text='user.name'></span>
                 </div>
                 <div class="collapsible-body">
                     <div class="p-all-9">
                         <span class="f-bold">Username: </span>
-                        <span>AmirrezaRazavi</span>
+                        <span x-text='user.username'></span>
                     </div>
                     <div class="p-all-9">
                         <span class="f-bold">Email: </span>
-                        <span>amirreza.razavi7325@gmail.com</span>
+                        <span x-text='user.email'></span>
                     </div>
                     <div class="p-all-9">
                         <span class="f-bold">Address: </span>
-                        <span>Dubai, UAE</span>
-                    </div>
-                    <div class="p-all- flex-l-m">
-                        <span class="f-bold">Action: </span>
-                        <i class="material-icons red-text m-l-5 m-r-5">delete_forever</i>
-                        <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5">edit</i>
-                    </div>
-                </div>
-            </li>
-            <li class="user-list-item">
-                <div class="collapsible-header">
-                    <i
-                        class="material-icons users-list-arrow-icon trans-0-2 blue-text text-darken-2">arrow_drop_down_circle</i>
-                    Amirreza Razavi
-                </div>
-                <div class="collapsible-body">
-                    <div class="p-all-9">
-                        <span class="f-bold">Username: </span>
-                        <span>AmirrezaRazavi</span>
-                    </div>
-                    <div class="p-all-9">
-                        <span class="f-bold">Email: </span>
-                        <span>amirreza.razavi7325@gmail.com</span>
-                    </div>
-                    <div class="p-all-9">
-                        <span class="f-bold">Address: </span>
-                        <span>Dubai, UAE</span>
+                        <span x-text="user.address.city+' - '+user.address.street"></span>
                     </div>
                     <div class="p-all-9 flex-l-m">
                         <span class="f-bold">Action: </span>
@@ -131,6 +106,7 @@
                     </div>
                 </div>
             </li>
+            </template>
         </ul>
         <!-- end users for phone -->
         <!-- start users for desktop -->
@@ -147,59 +123,23 @@
                     </tr>
                 </thead>
                 <tbody class="desktop-table-body">
-                    <tr>
-                        <td>1</td>
-                        <td>Amirreza</td>
-                        <td>Amirreza.R</td>
-                        <td>AmirEmail@gmail.com</td>
-                        <td>Dubai, UAE</td>
-                        <td>
-                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                            <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Amirreza</td>
-                        <td>Amirreza.R</td>
-                        <td>AmirEmail@gmail.com</td>
-                        <td>Dubai, UAE</td>
-                        <td>
-                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                            <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Amirreza</td>
-                        <td>Amirreza.R</td>
-                        <td>AmirEmail@gmail.com</td>
-                        <td>Dubai, UAE</td>
-                        <td>
-                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                            <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Amirreza</td>
-                        <td>Amirreza.R</td>
-                        <td>AmirEmail@gmail.com</td>
-                        <td>Dubai, UAE</td>
-                        <td>
-                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                            <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
-                        </td>
-                    </tr>
+                    <template x-for="user in users">
+                        <tr>
+                            <td x-text="user.id"></td>
+                            <td x-text="user.name"></td>
+                            <td x-text="user.username"></td>
+                            <td x-text="user.email"></td>
+                            <td x-text="user.address.city+' - '+user.address.street"></td>
+                            <td>
+                                <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
+                                <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
+                            </td>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
         </div>
         <!-- end users for desktop -->
-        <!-- start test section -->
-        <section id="test-section" class="grey">
-            123456
-        </section>
-        <!-- end test section -->
         <!-- start footer -->
         <div
             class="footer-container container p-l-9 p-r-9 p-t-19 p-b-10 flex-sb-m pos-fixed left-0 right-0 bottom-0 z-depth-4 rounded_top_30">
@@ -212,10 +152,8 @@
                 <span class="blue-text text-darken-2 m-l-5 m-r-5">100</span>
             </div>
             <div class="footer-buttons">
-                <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_right</i>
-                <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_left</i>
+                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_left</i>
+                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_right</i>
             </div>
         </div>
         <!-- end footer -->
@@ -252,7 +190,9 @@
     <!-- end add user -->
 
     <!-- script links -->
+    <script src="assets/js/axios.js"></script>
     <script defer src="assets/js/alpine.js"></script>
+    <script src="assets/js/alpineJsController/usersController.js"></script>
     <script src="/assets/materialize/js/materialize.min.js"></script>
     <script src="/assets/js/app.js"></script>
     <script src="assets/js/users.js"></script>
