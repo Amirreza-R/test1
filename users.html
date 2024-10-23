@@ -55,7 +55,7 @@
         <!-- Start Add Button -->
         <div class="p-l-10 p-r-10 p-t-10 col s12 m3 l2">
             <button id="add-user-btn"
-                class="waves-effect waves-light btn blue darken-2 p-l-30 p-r-30 w-full rounded_pill flex-c">
+                class="waves-effect waves-light btn blue darken-2 p-l-30 p-r-30 w-full rounded_pill flex-c" x-on:click="showAddModal =true">
                 <i class="material-icons m-r-5">add</i>
                 Add User
             </button>
@@ -75,37 +75,56 @@
         <div class="col l2 hide-on-med-and-down"></div>
     </section>
     <!-- end top section -->
+    <!-- start loading spinner -->
+    <template x-if="isLoading">
+        <div class="center-align">
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- end loading spinner -->
     <!-- start users info -->
     <section class="user-list-selection" x-init='getUsers()'>
         <!-- start users for phone -->
         <ul class="collapsible hide-on-med-and-up">
             <template x-for="user in users">
                 <li class="user-list-item">
-                <div class="collapsible-header">
-                    <i
-                        class="material-icons users-list-arrow-icon trans-0-2 blue-text text-darken-2">arrow_drop_down_circle</i>
+                    <div class="collapsible-header">
+                        <i
+                            class="material-icons users-list-arrow-icon trans-0-2 blue-text text-darken-2">arrow_drop_down_circle</i>
                         <span x-text='user.name'></span>
-                </div>
-                <div class="collapsible-body">
-                    <div class="p-all-9">
-                        <span class="f-bold">Username: </span>
-                        <span x-text='user.username'></span>
                     </div>
-                    <div class="p-all-9">
-                        <span class="f-bold">Email: </span>
-                        <span x-text='user.email'></span>
+                    <div class="collapsible-body">
+                        <div class="p-all-9">
+                            <span class="f-bold">Username: </span>
+                            <span x-text='user.username'></span>
+                        </div>
+                        <div class="p-all-9">
+                            <span class="f-bold">Email: </span>
+                            <span x-text='user.email'></span>
+                        </div>
+                        <div class="p-all-9">
+                            <span class="f-bold">Address: </span>
+                            <span x-text="user.address.city+' - '+user.address.street"></span>
+                        </div>
+                        <div class="p-all-9 flex-l-m">
+                            <span class="f-bold">Action: </span>
+                            <i class="material-icons red-text m-l-5 m-r-5">delete_forever</i>
+                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5">edit</i>
+                        </div>
                     </div>
-                    <div class="p-all-9">
-                        <span class="f-bold">Address: </span>
-                        <span x-text="user.address.city+' - '+user.address.street"></span>
-                    </div>
-                    <div class="p-all-9 flex-l-m">
-                        <span class="f-bold">Action: </span>
-                        <i class="material-icons red-text m-l-5 m-r-5">delete_forever</i>
-                        <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5">edit</i>
-                    </div>
-                </div>
-            </li>
+                </li>
             </template>
         </ul>
         <!-- end users for phone -->
@@ -152,16 +171,18 @@
                 <span class="blue-text text-darken-2 m-l-5 m-r-5">100</span>
             </div>
             <div class="footer-buttons">
-                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_left</i>
-                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_right</i>
+                <i
+                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_left</i>
+                <i
+                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill">keyboard_arrow_right</i>
             </div>
         </div>
         <!-- end footer -->
     </section>
     <!-- end users info -->
     <!-- start add user -->
-    <div class="add-user-modal-back dis-none"></div>
-    <div class="add-user-modal container rounded_top_30 trans-0-3">
+    <div class="add-user-modal-back dis-none" x-bind:class="{'dis-none': !showAddModal}" x-on:click="showAddModal=false"></div>
+    <div class="add-user-modal container rounded_top_30 trans-0-3" x-bind:class="{'show': showAddModal}">
         <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center-on-small-only">
             <h5>
                 <i class="material-icons m-r-10 m-l-5 pos-relative top-3">person_add</i>

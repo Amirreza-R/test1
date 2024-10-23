@@ -71,3 +71,8 @@ table.highlight>tbody>tr:hover {
 .side-nav-link-icons {
     margin: 0 0 0 20px !important;
 }
+
+.user-list-selection{
+    height: calc(100vh - 258px);
+    overflow: auto;
+}
