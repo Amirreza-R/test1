@@ -18,31 +18,31 @@ document.addEventListener("DOMContentLoaded", function () {
             e.target.classList.add("dis-none");
         });
 
-    setTimeout(() => {
-        console.log("Start..");
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then((response) => response.json())
-            .then((json) => {
-                console.log("End...");
-                console.log(json);
-                let html =""
+    // setTimeout(() => {
+    //     console.log("Start..");
+    //     fetch("https://jsonplaceholder.typicode.com/users")
+    //         .then((response) => response.json())
+    //         .then((json) => {
+    //             console.log("End...");
+    //             console.log(json);
+    //             let html =""
 
-            for (const user of json) {
-                html = html + `<tr>
-                                    <td>${user.id}</td>
-                                    <td>${user.name}</td>
-                                    <td>${user.username}</td>
-                                    <td>${user.email}</td>
-                                    <td>${user.address.city}</td>
-                                    <td>
-                                        <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                                        <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
-                                    </td>
-                                </tr>`
-            }
+    //         for (const user of json) {
+    //             html = html + `<tr>
+    //                                 <td>${user.id}</td>
+    //                                 <td>${user.name}</td>
+    //                                 <td>${user.username}</td>
+    //                                 <td>${user.email}</td>
+    //                                 <td>${user.address.city}</td>
+    //                                 <td>
+    //                                     <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
+    //                                     <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
+    //                                 </td>
+    //                             </tr>`
+    //         }
 
-            document.querySelector(".desktop-table-body").innerHTML = html
+    //         document.querySelector(".desktop-table-body").innerHTML = html
 
-            });
-        }, 1000);
+    //         });
+    //     }, 1000);
 });

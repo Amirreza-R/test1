@@ -7,10 +7,6 @@
     font-style: normal;
 }
 
-* {
-    direction: rtl;
-}
-
 @media(min-width: 600px) {
     .top-nav {
         box-shadow: 0 0 50px grey !important;
