@@ -55,16 +55,17 @@
         <!-- Start Add Button -->
         <div class="p-l-10 p-r-10 p-t-10 col s12 m3 l2">
             <button id="add-user-btn"
-                class="waves-effect waves-light btn blue darken-2 p-l-30 p-r-30 w-full rounded_pill flex-c" x-on:click="showAddModal =true">
+                class="waves-effect waves-light btn blue darken-2 p-l-30 p-r-30 w-full rounded_pill flex-c"
+                x-on:click="showAddModal =true; userIdToEdit = null; clearForm()">
                 <i class="material-icons m-r-5">add</i>
                 Add User
             </button>
         </div>
         <!-- End Add Button -->
         <!-- Start search -->
-        <div class="row col s12 m9 l8 m-b-0">
+        <div class="row col s12 m9 l8 m-b-0" x-init="$watch('searchChar', (value)=>handleSearch(value) )">
             <div class="input-field">
-                <input id="search" type="text" class="validate">
+                <input id="search" type="text" class="validate" x-model="searchChar">
                 <label for="search">
                     <i class="material-icons pos-relative top-6">search</i>
                     Search
@@ -116,12 +117,14 @@
                         </div>
                         <div class="p-all-9">
                             <span class="f-bold">Address: </span>
-                            <span x-text="user.address.city+' - '+user.address.street"></span>
+                            <span x-text="(user.address?.city || '') + '-' + (user.address?.street || '')"></span>
                         </div>
                         <div class="p-all-9 flex-l-m">
                             <span class="f-bold">Action: </span>
-                            <i class="material-icons red-text m-l-5 m-r-5">delete_forever</i>
-                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5">edit</i>
+                            <i class="material-icons red-text m-l-5 m-r-5"
+                                x-on:click="deleteUser(user.id)">delete_forever</i>
+                            <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5"
+                                x-on:click="updateUserInfo(user)">edit</i>
                         </div>
                     </div>
                 </li>
@@ -148,10 +151,11 @@
                             <td x-text="user.name"></td>
                             <td x-text="user.username"></td>
                             <td x-text="user.email"></td>
-                            <td x-text="user.address.city+' - '+user.address.street"></td>
+                            <td x-text="(user.address?.city || '') + '-' + (user.address?.street || '')"></td>
                             <td>
-                                <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer">edit</i>
-                                <i class="material-icons red-text m-l-5 m-r-5 hov-pointer">delete_forever</i>
+                                <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer" x-on:click="updateUserInfo(user)">edit</i>
+                                <i class="material-icons red-text m-l-5 m-r-5 hov-pointer"
+                                    x-on:click="deleteUser(user.id)">delete_forever</i>
                             </td>
                         </tr>
                     </template>
@@ -160,21 +164,24 @@
         </div>
         <!-- end users for desktop -->
         <!-- start footer -->
-        <div class="footer-container container p-l-9 p-r-9 p-t-19 p-b-10 flex-sb-m pos-fixed left-0 right-0 bottom-0 z-depth-4 rounded_top_30">
+        <div
+            class="footer-container container p-l-9 p-r-9 p-t-19 p-b-10 flex-sb-m pos-fixed left-0 right-0 bottom-0 z-depth-4 rounded_top_30">
             <div class="footer-item-counts p-l-10 flex-l-base">
                 showing
-                <span class="m-l-5 m-r-5 max-w-50" x-init="$watch('itemsCount', (value)=>handleChangeItemsCount(value))">
-                    <input type="number" class="blue-text text-darken-2 no-border center-align m-b-0" x-model="itemsCount" x-on:change="pagination()">
+                <span class="m-l-5 m-r-5 max-w-50"
+                    x-init="$watch('itemsCount', (value)=>handleChangeItemsCount(value))">
+                    <input type="number" class="blue-text text-darken-2 no-border center-align m-b-0"
+                        x-model="itemsCount" x-on:change="pagination()">
                 </span>
                 of
                 <span class="blue-text text-darken-2 m-l-5 m-r-5" x-text="users.length">100</span>
             </div>
             <strong x-text="currentPage" class="blue-text text-darken-2 page-number"></strong>
             <div class="footer-buttons">
-                <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill" x-on:click="previousPage()">keyboard_arrow_left</i>
-                <i
-                    class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill" x-on:click="nextPage()">keyboard_arrow_right</i>
+                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill"
+                    x-on:click="previousPage()">keyboard_arrow_left</i>
+                <i class="material-icons blue darken-2 m-l-5 m-r-5 p-all-5 waves-effect waves-light white-text rounded_pill"
+                    x-on:click="nextPage()">keyboard_arrow_right</i>
             </div>
         </div>
         <!-- end footer -->
@@ -186,23 +193,25 @@
         <div class="row p-t-10 p-b-10 p-r-40 p-l-40 center-on-small-only">
             <h5>
                 <i class="material-icons m-r-10 m-l-5 pos-relative top-3">person_add</i>
-                Add User
+                <span x-text="userIdToEdit ? 'Edit User' : 'Add User'"></span>
             </h5>
             <form>
                 <div class="input-field col s12">
-                    <input type="text" id="name" class="validate">
+                    <input type="text" id="name" class="validate" x-model="newUserInfo.name">
                     <label for="name">Name</label>
                 </div>
                 <div class="input-field col s12">
-                    <input type="text" id="username" class="validate">
+                    <input type="text" id="username" class="validate" x-model="newUserInfo.username">
                     <label for="username">username</label>
                 </div>
                 <div class="input-field col s12">
-                    <input type="email" id="email" class="validate">
+                    <input type="email" id="email" class="validate" x-model="newUserInfo.email">
                     <label for="email">Email</label>
                 </div>
                 <button type="button"
-                    class="waves-effect waves-light btn blue darken-2 m-t-20 m-b-10 rounded_pill w-full max-w-250">
+                    class="waves-effect waves-light btn blue darken-2 m-t-20 m-b-10 rounded_pill w-full max-w-250"
+                    x-on:click="userIdToEdit ? confirmUpdateUserInfo() : addNewUser()"
+                    x-bind:class="{'pulse' : isLoading, 'orange' : userIdToEdit}" x-bind:disabled="isLoading">
                     Submit
                 </button>
             </form>
