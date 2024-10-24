@@ -153,7 +153,8 @@
                             <td x-text="user.email"></td>
                             <td x-text="(user.address?.city || '') + '-' + (user.address?.street || '')"></td>
                             <td>
-                                <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer" x-on:click="updateUserInfo(user)">edit</i>
+                                <i class="material-icons orange-text text-darken-3 m-l-5 m-r-5 hov-pointer"
+                                    x-on:click="updateUserInfo(user)">edit</i>
                                 <i class="material-icons red-text m-l-5 m-r-5 hov-pointer"
                                     x-on:click="deleteUser(user.id)">delete_forever</i>
                             </td>
@@ -218,7 +219,6 @@
         </div>
     </div>
     <!-- end add user -->
-
 
 
     <!-- script links -->
